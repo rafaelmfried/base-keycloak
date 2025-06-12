@@ -1,14 +1,21 @@
 services:
   keycloak:
-    image: quay.io/keycloak/keycloak:26.2.4
+    build:
+      context: ./keycloak
+      dockerfile: Dockerfile
     ports:
       - 8080:8080
     environment:
       - KC_BOOTSTRAP_ADMIN_USERNAME=admin
       - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
-      - KC_FEATURES=organization
     volumes:
-      - ./keycloak_data:/opt/keycloak/data
+      - keycloak_data:/opt/keycloak/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - keycloak_network
+    restart: unless-stopped
     command: start-dev
   postgres:
     image: postgres:15
@@ -18,9 +25,18 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=suitedb
+      - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-      - ./postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - keycloak_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d suitedb"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
   rabbitmq:
     image: rabbitmq:3-management
     ports:
@@ -30,13 +46,19 @@ services:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=admin
     volumes:
-      - ./rabbitmq_data:/var/lib/rabbitmq
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - keycloak_network
+    restart: unless-stopped
   redis:
     image: redis:latest
     ports:
       - 6379:6379
     volumes:
-      - ./redis_data:/data
+      - redis_data:/data
+    networks:
+      - keycloak_network
+    restart: unless-stopped
 volumes:
   keycloak_data:
     driver: local
@@ -47,5 +69,5 @@ volumes:
   redis_data:
     driver: local
 networks:
-  default:
+  keycloak_network:
     driver: bridge
