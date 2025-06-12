@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>suitedb.keycloak</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="bower/html5shiv/html5shiv.min.js"></script>
+        <script src="bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="index.html" class="navbar-brand"><b>suitedb</b></a><span class="navbar-brand" style="padding-left: 0">.keycloak</span>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>All Relationships</h1>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-code-fork"></i>
+                            <h3 class="box-title">Diagrams</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="nav-tabs-custom">
+                                <!-- Tabs within a box -->
+                                <h5>By default only columns that are primary keys, foreign keys or indexes are shown.</h5>
+                                <ul class="nav nav-tabs pull-left ui-sortable-handle">
+                                    <li class="active"><a href="#compactDegreeImg-chart" data-toggle="tab" aria-expanded="true">Compact</a></li>
+                                    <li class=""><a href="#largeDegreeImg-chart" data-toggle="tab" aria-expanded="true">Large</a></li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <div class="chart tab-pane active" id="compactDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="compactRelationshipsDiagram" name="compactRelationshipsDiagram">
+<area shape="rect" id="node1" href="tables/authentication_execution.html" target="_top" title="authentication_execution" alt="" coords="1627,1349,1957,1525">
+<area shape="rect" id="node8" href="tables/authentication_flow.html" target="_top" title="authentication_flow" alt="" coords="1267,1455,1545,1601">
+<area shape="rect" id="node42" href="tables/realm.html" target="_top" title="realm" alt="" coords="820,2849,1185,3025">
+<area shape="rect" id="node2" href="tables/client_scope_client.html" target="_top" title="client_scope_client" alt="" coords="68,2841,335,2988">
+<area shape="rect" id="node3" href="tables/idp_mapper_config.html" target="_top" title="idp_mapper_config" alt="" coords="1659,3433,1925,3580">
+<area shape="rect" id="node51" href="tables/identity_provider_mapper.html" target="_top" title="identity_provider_mapper" alt="" coords="1239,3433,1573,3580">
+<area shape="rect" id="node4" href="tables/identity_provider_config.html" target="_top" title="identity_provider_config" alt="" coords="1632,1983,1952,2129">
+<area shape="rect" id="node16" href="tables/identity_provider.html" target="_top" title="identity_provider" alt="" coords="1257,1983,1555,2276">
+<area shape="rect" id="node5" href="tables/role_attribute.html" target="_top" title="role_attribute" alt="" coords="1683,2269,1901,2416">
+<area shape="rect" id="node31" href="tables/keycloak_role.html" target="_top" title="keycloak_role" alt="" coords="1268,2433,1544,2668">
+<area shape="rect" id="node6" href="tables/client_attributes.html" target="_top" title="client_attributes" alt="" coords="438,5,682,152">
+<area shape="rect" id="node70" href="tables/client.html" target="_top" title="client" alt="" coords="5,380,344,556">
+<area shape="rect" id="node7" href="tables/user_federation_provider.html" target="_top" title="user_federation_provider" alt="" coords="1242,1619,1570,1765">
+<area shape="rect" id="node9" href="tables/realm_smtp_config.html" target="_top" title="realm_smtp_config" alt="" coords="1273,1819,1539,1965">
+<area shape="rect" id="node10" href="tables/event_entity.html" target="_top" title="event_entity" alt="" coords="444,1747,721,1923">
+<area shape="rect" id="node11" href="tables/fed_user_attribute.html" target="_top" title="fed_user_attribute" alt="" coords="381,3852,705,4116">
+<area shape="rect" id="node12" href="tables/resource_server_scope.html" target="_top" title="resource_server_scope" alt="" coords="2842,1345,3147,1521">
+<area shape="rect" id="node61" href="tables/resource_server.html" target="_top" title="resource_server" alt="" coords="2512,1452,2784,1569">
+<area shape="rect" id="node13" href="tables/client_scope_attributes.html" target="_top" title="client_scope_attributes" alt="" coords="405,947,715,1093">
+<area shape="rect" id="node86" href="tables/client_scope.html" target="_top" title="client_scope" alt="" coords="73,947,276,1123">
+<area shape="rect" id="node14" href="tables/user_consent_client_scope.html" target="_top" title="user_consent_client_scope" alt="" coords="3236,2109,3577,2232">
+<area shape="rect" id="node69" href="tables/user_consent.html" target="_top" title="user_consent" alt="" coords="2891,2109,3169,2344">
+<area shape="rect" id="node15" href="tables/scope_mapping.html" target="_top" title="scope_mapping" alt="" coords="443,169,677,292">
+<area shape="rect" id="node17" href="tables/resource_server_resource.html" target="_top" title="resource_server_resource" alt="" coords="2828,1039,3161,1244">
+<area shape="rect" id="node18" href="tables/server_config.html" target="_top" title="server_config" alt="" coords="68,3560,291,3677">
+<area shape="rect" id="node19" href="tables/user_group_membership.html" target="_top" title="user_group_membership" alt="" coords="2869,2361,3191,2508">
+<area shape="rect" id="node21" href="tables/user_entity.html" target="_top" title="user_entity" alt="" coords="2512,2724,2824,2988">
+<area shape="rect" id="node20" href="tables/client_auth_flow_bindings.html" target="_top" title="client_auth_flow_bindings" alt="" coords="381,1525,716,1672">
+<area shape="rect" id="node22" href="tables/fed_user_group_membership.html" target="_top" title="fed_user_group_membership" alt="" coords="381,3564,744,3740">
+<area shape="rect" id="node23" href="tables/redirect_uris.html" target="_top" title="redirect_uris" alt="" coords="457,309,663,432">
+<area shape="rect" id="node24" href="tables/fed_user_role_mapping.html" target="_top" title="fed_user_role_mapping" alt="" coords="381,3313,689,3489">
+<area shape="rect" id="node25" href="tables/realm_enabled_event_types.html" target="_top" title="realm_enabled_event_types" alt="" coords="1229,2293,1583,2416">
+<area shape="rect" id="node26" href="tables/required_action_config.html" target="_top" title="required_action_config" alt="" coords="2888,3969,3193,4116">
+<area shape="rect" id="node27" href="tables/client_node_registrations.html" target="_top" title="client_node_registrations" alt="" coords="395,449,725,596">
+<area shape="rect" id="node28" href="tables/component_config.html" target="_top" title="component_config" alt="" coords="1661,4224,1923,4371">
+<area shape="rect" id="node85" href="tables/component.html" target="_top" title="component" alt="" coords="1310,4253,1502,4429">
+<area shape="rect" id="node29" href="tables/user_federation_mapper.html" target="_top" title="user_federation_mapper" alt="" coords="1631,1707,1953,1883">
+<area shape="rect" id="node30" href="tables/offline_client_session.html" target="_top" title="offline_client_session" alt="" coords="444,3004,735,3239">
+<area shape="rect" id="node32" href="tables/web_origins.html" target="_top" title="web_origins" alt="" coords="460,613,660,736">
+<area shape="rect" id="node33" href="tables/scope_policy.html" target="_top" title="scope_policy" alt="" coords="3284,1559,3491,1681">
+<area shape="rect" id="node54" href="tables/resource_server_policy.html" target="_top" title="resource_server_policy" alt="" coords="2841,1588,3148,1764">
+<area shape="rect" id="node34" href="tables/default_client_scope.html" target="_top" title="default_client_scope" alt="" coords="1265,2685,1547,2832">
+<area shape="rect" id="node35" href="tables/realm_default_groups.html" target="_top" title="realm_default_groups" alt="" coords="1259,2849,1553,2972">
+<area shape="rect" id="node36" href="tables/org.html" target="_top" title="org" alt="" coords="193,2503,355,2737">
+<area shape="rect" id="node37" href="tables/revoked_token.html" target="_top" title="revoked_token" alt="" coords="68,2051,295,2173">
+<area shape="rect" id="node38" href="tables/offline_user_session.html" target="_top" title="offline_user_session" alt="" coords="444,2661,724,2925">
+<area shape="rect" id="node39" href="tables/federated_user.html" target="_top" title="federated_user" alt="" coords="68,2307,311,2424">
+<area shape="rect" id="node40" href="tables/broker_link.html" target="_top" title="broker_link" alt="" coords="68,1776,311,1923">
+<area shape="rect" id="node41" href="tables/realm_events_listeners.html" target="_top" title="realm_events_listeners" alt="" coords="1252,2989,1560,3112">
+<area shape="rect" id="node43" href="tables/realm_supported_locales.html" target="_top" title="realm_supported_locales" alt="" coords="1243,3129,1569,3252">
+<area shape="rect" id="node44" href="tables/protocol_mapper_config.html" target="_top" title="protocol_mapper_config" alt="" coords="776,753,1093,900">
+<area shape="rect" id="node73" href="tables/protocol_mapper.html" target="_top" title="protocol_mapper" alt="" coords="422,753,698,929">
+<area shape="rect" id="node45" href="tables/composite_role.html" target="_top" title="composite_role" alt="" coords="1677,2433,1907,2556">
+<area shape="rect" id="node46" href="tables/authenticator_config_entry.html" target="_top" title="authenticator_config_entry" alt="" coords="381,4220,728,4367">
+<area shape="rect" id="node47" href="tables/jgroups_ping.html" target="_top" title="jgroups_ping" alt="" coords="68,1555,277,1672">
+<area shape="rect" id="node48" href="tables/realm_attribute.html" target="_top" title="realm_attribute" alt="" coords="1288,3269,1524,3416">
+<area shape="rect" id="node49" href="tables/user_role_mapping.html" target="_top" title="user_role_mapping" alt="" coords="2897,2525,3163,2648">
+<area shape="rect" id="node50" href="tables/fed_user_consent.html" target="_top" title="fed_user_consent" alt="" coords="444,2285,723,2549">
+<area shape="rect" id="node52" href="tables/associated_policy.html" target="_top" title="associated_policy" alt="" coords="3260,1699,3515,1821">
+<area shape="rect" id="node53" href="tables/realm_required_credential.html" target="_top" title="realm_required_credential" alt="" coords="1237,3597,1575,3744">
+<area shape="rect" id="node55" href="tables/resource_scope.html" target="_top" title="resource_scope" alt="" coords="3270,968,3505,1091">
+<area shape="rect" id="node56" href="tables/fed_user_credential.html" target="_top" title="fed_user_credential" alt="" coords="2512,3973,2787,4179">
+<area shape="rect" id="node57" href="tables/resource_policy.html" target="_top" title="resource_policy" alt="" coords="3270,1108,3505,1231">
+<area shape="rect" id="node58" href="tables/fed_user_required_action.html" target="_top" title="fed_user_required_action" alt="" coords="381,1997,709,2173">
+<area shape="rect" id="node59" href="tables/org_domain.html" target="_top" title="org_domain" alt="" coords="68,4253,265,4429">
+<area shape="rect" id="node60" href="tables/policy_config.html" target="_top" title="policy_config" alt="" coords="3282,1839,3493,1985">
+<area shape="rect" id="node62" href="tables/authenticator_config.html" target="_top" title="authenticator_config" alt="" coords="1263,3761,1549,3908">
+<area shape="rect" id="node63" href="tables/fed_user_consent_cl_scope.html" target="_top" title="fed_user_consent_cl_scope" alt="" coords="3139,4244,3481,4367">
+<area shape="rect" id="node64" href="tables/resource_attribute.html" target="_top" title="resource_attribute" alt="" coords="3255,664,3520,811">
+<area shape="rect" id="node65" href="tables/user_federation_mapper_config.html" target="_top" title="user_federation_mapper_config" alt="" coords="2001,1707,2391,1853">
+<area shape="rect" id="node66" href="tables/client_initial_access.html" target="_top" title="client_initial_access" alt="" coords="1268,3925,1544,4072">
+<area shape="rect" id="node67" href="tables/user_attribute.html" target="_top" title="user_attribute" alt="" coords="2868,2665,3192,2929">
+<area shape="rect" id="node68" href="tables/user_required_action.html" target="_top" title="user_required_action" alt="" coords="2886,2947,3174,3069">
+<area shape="rect" id="node71" href="tables/group_role_mapping.html" target="_top" title="group_role_mapping" alt="" coords="2917,3545,3199,3668">
+<area shape="rect" id="node72" href="tables/keycloak_group.html" target="_top" title="keycloak_group" alt="" coords="2637,3660,2873,3865">
+<area shape="rect" id="node74" href="tables/migration_model.html" target="_top" title="migration_model" alt="" coords="5,4032,252,4179">
+<area shape="rect" id="node75" href="tables/resource_server_perm_ticket.html" target="_top" title="resource_server_perm_ticket" alt="" coords="3205,1248,3569,1541">
+<area shape="rect" id="node76" href="tables/admin_event_entity.html" target="_top" title="admin_event_entity" alt="" coords="68,3063,343,3239">
+<area shape="rect" id="node77" href="tables/client_scope_role_mapping.html" target="_top" title="client_scope_role_mapping" alt="" coords="388,1111,732,1233">
+<area shape="rect" id="node78" href="tables/group_attribute.html" target="_top" title="group_attribute" alt="" coords="2939,3685,3177,3861">
+<area shape="rect" id="node79" href="tables/realm_localizations.html" target="_top" title="realm_localizations" alt="" coords="5,3781,276,3928">
+<area shape="rect" id="node80" href="tables/required_action_provider.html" target="_top" title="required_action_provider" alt="" coords="1242,4089,1570,4236">
+<area shape="rect" id="node81" href="tables/databasechangelog.html" target="_top" title="databasechangelog" alt="" coords="193,1333,468,1421">
+<area shape="rect" id="node82" href="tables/user_federation_config.html" target="_top" title="user_federation_config" alt="" coords="1631,1543,1953,1689">
+<area shape="rect" id="node83" href="tables/databasechangeloglock.html" target="_top" title="databasechangeloglock" alt="" coords="2700,4312,3015,4429">
+<area shape="rect" id="node84" href="tables/credential.html" target="_top" title="credential" alt="" coords="2930,3087,3130,3233">
+<area shape="rect" id="node87" href="tables/federated_identity.html" target="_top" title="federated_identity" alt="" coords="2898,3251,3162,3427">
+<area shape="rect" id="node88" href="tables/resource_uris.html" target="_top" title="resource_uris" alt="" coords="3280,828,3495,951">
+</map>
+                                        <a name='diagram'><img id="compactDegreeImg" src="diagrams/summary/relationships.real.compact.png" usemap="#compactRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="largeDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="largeRelationshipsDiagram" name="largeRelationshipsDiagram">
+<area shape="rect" id="node1" href="tables/authentication_execution.html" target="_top" title="authentication_execution" alt="" coords="2013,529,2344,887">
+<area shape="rect" id="node8" href="tables/authentication_flow.html" target="_top" title="authentication_flow" alt="" coords="1654,669,1931,939">
+<area shape="rect" id="node42" href="tables/realm.html" target="_top" title="realm" alt="" coords="1207,2624,1572,4243">
+<area shape="rect" id="node2" href="tables/client_scope_client.html" target="_top" title="client_scope_client" alt="" coords="147,925,413,1077">
+<area shape="rect" id="node3" href="tables/idp_mapper_config.html" target="_top" title="idp_mapper_config" alt="" coords="2045,3213,2312,3365">
+<area shape="rect" id="node51" href="tables/identity_provider_mapper.html" target="_top" title="identity_provider_mapper" alt="" coords="1625,3213,1960,3424">
+<area shape="rect" id="node4" href="tables/identity_provider_config.html" target="_top" title="identity_provider_config" alt="" coords="2019,1477,2339,1629">
+<area shape="rect" id="node16" href="tables/identity_provider.html" target="_top" title="identity_provider" alt="" coords="1643,1477,1942,1981">
+<area shape="rect" id="node5" href="tables/role_attribute.html" target="_top" title="role_attribute" alt="" coords="2070,1940,2287,2121">
+<area shape="rect" id="node31" href="tables/keycloak_role.html" target="_top" title="keycloak_role" alt="" coords="1655,2139,1931,2437">
+<area shape="rect" id="node6" href="tables/client_attributes.html" target="_top" title="client_attributes" alt="" coords="3335,1787,3579,1939">
+<area shape="rect" id="node70" href="tables/client.html" target="_top" title="client" alt="" coords="2903,2096,3241,2923">
+<area shape="rect" id="node7" href="tables/user_federation_provider.html" target="_top" title="user_federation_provider" alt="" coords="1629,956,1957,1255">
+<area shape="rect" id="node9" href="tables/realm_smtp_config.html" target="_top" title="realm_smtp_config" alt="" coords="1659,1308,1926,1460">
+<area shape="rect" id="node10" href="tables/event_entity.html" target="_top" title="event_entity" alt="" coords="500,691,777,1077">
+<area shape="rect" id="node11" href="tables/fed_user_attribute.html" target="_top" title="fed_user_attribute" alt="" coords="3115,3717,3439,4045">
+<area shape="rect" id="node12" href="tables/resource_server_scope.html" target="_top" title="resource_server_scope" alt="" coords="335,1876,641,2087">
+<area shape="rect" id="node61" href="tables/resource_server.html" target="_top" title="resource_server" alt="" coords="5,2015,277,2196">
+<area shape="rect" id="node13" href="tables/client_scope_attributes.html" target="_top" title="client_scope_attributes" alt="" coords="3303,2905,3612,3057">
+<area shape="rect" id="node86" href="tables/client_scope.html" target="_top" title="client_scope" alt="" coords="2971,2940,3173,3151">
+<area shape="rect" id="node14" href="tables/user_consent_client_scope.html" target="_top" title="user_consent_client_scope" alt="" coords="3627,5,3968,128">
+<area shape="rect" id="node69" href="tables/user_consent.html" target="_top" title="user_consent" alt="" coords="3281,5,3560,275">
+<area shape="rect" id="node15" href="tables/scope_mapping.html" target="_top" title="scope_mapping" alt="" coords="3341,1956,3574,2079">
+<area shape="rect" id="node17" href="tables/resource_server_resource.html" target="_top" title="resource_server_resource" alt="" coords="321,1523,655,1821">
+<area shape="rect" id="node18" href="tables/server_config.html" target="_top" title="server_config" alt="" coords="5,4105,228,4257">
+<area shape="rect" id="node19" href="tables/user_group_membership.html" target="_top" title="user_group_membership" alt="" coords="3259,292,3582,444">
+<area shape="rect" id="node21" href="tables/user_entity.html" target="_top" title="user_entity" alt="" coords="2903,660,3215,1105">
+<area shape="rect" id="node20" href="tables/client_auth_flow_bindings.html" target="_top" title="client_auth_flow_bindings" alt="" coords="359,3187,693,3339">
+<area shape="rect" id="node22" href="tables/fed_user_group_membership.html" target="_top" title="fed_user_group_membership" alt="" coords="288,2875,651,3056">
+<area shape="rect" id="node23" href="tables/redirect_uris.html" target="_top" title="redirect_uris" alt="" coords="3354,2096,3561,2219">
+<area shape="rect" id="node24" href="tables/fed_user_role_mapping.html" target="_top" title="fed_user_role_mapping" alt="" coords="3821,4217,4129,4399">
+<area shape="rect" id="node25" href="tables/realm_enabled_event_types.html" target="_top" title="realm_enabled_event_types" alt="" coords="1616,1999,1969,2121">
+<area shape="rect" id="node26" href="tables/required_action_config.html" target="_top" title="required_action_config" alt="" coords="783,4317,1088,4469">
+<area shape="rect" id="node27" href="tables/client_node_registrations.html" target="_top" title="client_node_registrations" alt="" coords="3293,2236,3622,2388">
+<area shape="rect" id="node28" href="tables/component_config.html" target="_top" title="component_config" alt="" coords="2048,4383,2309,4564">
+<area shape="rect" id="node85" href="tables/component.html" target="_top" title="component" alt="" coords="1697,4412,1889,4681">
+<area shape="rect" id="node29" href="tables/user_federation_mapper.html" target="_top" title="user_federation_mapper" alt="" coords="2018,1115,2339,1325">
+<area shape="rect" id="node30" href="tables/offline_client_session.html" target="_top" title="offline_client_session" alt="" coords="783,3888,1073,4187">
+<area shape="rect" id="node32" href="tables/web_origins.html" target="_top" title="web_origins" alt="" coords="3357,2405,3557,2528">
+<area shape="rect" id="node33" href="tables/scope_policy.html" target="_top" title="scope_policy" alt="" coords="777,2129,984,2252">
+<area shape="rect" id="node54" href="tables/resource_server_policy.html" target="_top" title="resource_server_policy" alt="" coords="335,2159,641,2457">
+<area shape="rect" id="node34" href="tables/default_client_scope.html" target="_top" title="default_client_scope" alt="" coords="1652,2455,1933,2607">
+<area shape="rect" id="node35" href="tables/realm_default_groups.html" target="_top" title="realm_default_groups" alt="" coords="1645,2624,1940,2747">
+<area shape="rect" id="node36" href="tables/org.html" target="_top" title="org" alt="" coords="924,779,1085,1077">
+<area shape="rect" id="node37" href="tables/revoked_token.html" target="_top" title="revoked_token" alt="" coords="5,3852,232,3975">
+<area shape="rect" id="node38" href="tables/offline_user_session.html" target="_top" title="offline_user_session" alt="" coords="359,3859,639,4187">
+<area shape="rect" id="node39" href="tables/federated_user.html" target="_top" title="federated_user" alt="" coords="5,3611,248,3763">
+<area shape="rect" id="node40" href="tables/broker_link.html" target="_top" title="broker_link" alt="" coords="3751,3281,3993,3551">
+<area shape="rect" id="node41" href="tables/realm_events_listeners.html" target="_top" title="realm_events_listeners" alt="" coords="1639,2764,1947,2887">
+<area shape="rect" id="node43" href="tables/realm_supported_locales.html" target="_top" title="realm_supported_locales" alt="" coords="1630,2904,1955,3027">
+<area shape="rect" id="node44" href="tables/protocol_mapper_config.html" target="_top" title="protocol_mapper_config" alt="" coords="3673,2580,3991,2732">
+<area shape="rect" id="node73" href="tables/protocol_mapper.html" target="_top" title="protocol_mapper" alt="" coords="3319,2580,3595,2820">
+<area shape="rect" id="node45" href="tables/composite_role.html" target="_top" title="composite_role" alt="" coords="2063,2139,2294,2261">
+<area shape="rect" id="node46" href="tables/authenticator_config_entry.html" target="_top" title="authenticator_config_entry" alt="" coords="3044,4176,3391,4328">
+<area shape="rect" id="node47" href="tables/jgroups_ping.html" target="_top" title="jgroups_ping" alt="" coords="147,584,356,795">
+<area shape="rect" id="node48" href="tables/realm_attribute.html" target="_top" title="realm_attribute" alt="" coords="1675,3044,1911,3196">
+<area shape="rect" id="node49" href="tables/user_role_mapping.html" target="_top" title="user_role_mapping" alt="" coords="3287,461,3554,584">
+<area shape="rect" id="node50" href="tables/fed_user_consent.html" target="_top" title="fed_user_consent" alt="" coords="359,3435,637,3763">
+<area shape="rect" id="node52" href="tables/associated_policy.html" target="_top" title="associated_policy" alt="" coords="753,2269,1008,2392">
+<area shape="rect" id="node53" href="tables/realm_required_credential.html" target="_top" title="realm_required_credential" alt="" coords="1623,3441,1962,3652">
+<area shape="rect" id="node55" href="tables/resource_scope.html" target="_top" title="resource_scope" alt="" coords="763,1504,998,1627">
+<area shape="rect" id="node56" href="tables/fed_user_credential.html" target="_top" title="fed_user_credential" alt="" coords="3539,3729,3813,4116">
+<area shape="rect" id="node57" href="tables/resource_policy.html" target="_top" title="resource_policy" alt="" coords="763,1644,998,1767">
+<area shape="rect" id="node58" href="tables/fed_user_required_action.html" target="_top" title="fed_user_required_action" alt="" coords="359,4288,687,4469">
+<area shape="rect" id="node59" href="tables/org_domain.html" target="_top" title="org_domain" alt="" coords="3539,4217,3736,4399">
+<area shape="rect" id="node60" href="tables/policy_config.html" target="_top" title="policy_config" alt="" coords="775,2409,986,2561">
+<area shape="rect" id="node62" href="tables/authenticator_config.html" target="_top" title="authenticator_config" alt="" coords="1649,3669,1936,3821">
+<area shape="rect" id="node63" href="tables/fed_user_consent_cl_scope.html" target="_top" title="fed_user_consent_cl_scope" alt="" coords="288,2651,631,2773">
+<area shape="rect" id="node64" href="tables/resource_attribute.html" target="_top" title="resource_attribute" alt="" coords="748,1165,1013,1347">
+<area shape="rect" id="node65" href="tables/user_federation_mapper_config.html" target="_top" title="user_federation_mapper_config" alt="" coords="2388,1115,2777,1267">
+<area shape="rect" id="node66" href="tables/client_initial_access.html" target="_top" title="client_initial_access" alt="" coords="1655,3839,1931,4079">
+<area shape="rect" id="node67" href="tables/user_attribute.html" target="_top" title="user_attribute" alt="" coords="3259,601,3583,871">
+<area shape="rect" id="node68" href="tables/user_required_action.html" target="_top" title="user_required_action" alt="" coords="3277,888,3565,1011">
+<area shape="rect" id="node71" href="tables/group_role_mapping.html" target="_top" title="group_role_mapping" alt="" coords="3324,3283,3605,3405">
+<area shape="rect" id="node72" href="tables/keycloak_group.html" target="_top" title="keycloak_group" alt="" coords="3044,3411,3280,3621">
+<area shape="rect" id="node74" href="tables/migration_model.html" target="_top" title="migration_model" alt="" coords="5,3328,252,3480">
+<area shape="rect" id="node75" href="tables/resource_server_perm_ticket.html" target="_top" title="resource_server_perm_ticket" alt="" coords="699,1784,1063,2112">
+<area shape="rect" id="node76" href="tables/admin_event_entity.html" target="_top" title="admin_event_entity" alt="" coords="783,2752,1057,3197">
+<area shape="rect" id="node77" href="tables/client_scope_role_mapping.html" target="_top" title="client_scope_role_mapping" alt="" coords="3285,3075,3629,3197">
+<area shape="rect" id="node78" href="tables/group_attribute.html" target="_top" title="group_attribute" alt="" coords="3346,3423,3583,3604">
+<area shape="rect" id="node79" href="tables/realm_localizations.html" target="_top" title="realm_localizations" alt="" coords="5,4388,276,4540">
+<area shape="rect" id="node80" href="tables/required_action_provider.html" target="_top" title="required_action_provider" alt="" coords="1629,4096,1957,4395">
+<area shape="rect" id="node81" href="tables/databasechangelog.html" target="_top" title="databasechangelog" alt="" coords="783,3288,1057,3763">
+<area shape="rect" id="node82" href="tables/user_federation_config.html" target="_top" title="user_federation_config" alt="" coords="2018,945,2339,1097">
+<area shape="rect" id="node83" href="tables/databasechangeloglock.html" target="_top" title="databasechangeloglock" alt="" coords="500,401,815,583">
+<area shape="rect" id="node84" href="tables/credential.html" target="_top" title="credential" alt="" coords="3321,1028,3521,1385">
+<area shape="rect" id="node87" href="tables/federated_identity.html" target="_top" title="federated_identity" alt="" coords="3289,1403,3553,1643">
+<area shape="rect" id="node88" href="tables/resource_uris.html" target="_top" title="resource_uris" alt="" coords="773,1364,988,1487">
+</map>
+                                        <a name='diagram'><img id="largeDegreeImg" src="diagrams/summary/relationships.real.large.png" usemap="#largeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div>
+                </section>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 7.0.2</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="bower/pdfmake/pdfmake.min.js"></script>
+        <script src="bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="bower/codemirror/codemirror.js"></script>
+        <script src="bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="relationships.js"></script>
+        <script src="schemaSpy.js"></script>
+    </body>
+</html>

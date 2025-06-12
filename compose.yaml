@@ -59,6 +59,34 @@ services:
     networks:
       - keycloak_network
     restart: unless-stopped
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    ports:
+      - 8081:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_CONFIG_SERVER_MODE=False
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - keycloak_network
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+  schemaspy:
+    image: schemaspy/schemaspy:latest
+    volumes:
+      - ./schemaspy/output:/output
+      - ./schemaspy/config:/config
+    networks:
+      - keycloak_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["-configFile", "/config/schemaspy.properties"]
+    restart: "no"
 volumes:
   keycloak_data:
     driver: local
@@ -67,6 +95,8 @@ volumes:
   rabbitmq_data:
     driver: local
   redis_data:
+    driver: local
+  pgadmin_data:
     driver: local
 networks:
   keycloak_network:

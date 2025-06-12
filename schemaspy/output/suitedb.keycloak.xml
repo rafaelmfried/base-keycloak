@@ -1,0 +1,1729 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database name="suitedb" schema="keycloak" type="PostgreSQL - 15.13 (Debian 15.13-1.pgdg120+1)">
+   <tables>
+      <table name="admin_event_entity" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="admin_event_time" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="realm_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="operation_type" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="auth_realm_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="auth_client_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="auth_user_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="ip_address" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="resource_path" nullable="true" remarks="" size="2550" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="representation" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="error" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="resource_type" nullable="true" remarks="" size="64" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="details_json" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_admin_event_entity" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_admin_event_time" unique="false">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="admin_event_time"/>
+         </index>
+      </table>
+      <table name="associated_policy" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="policy_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_frsrpas14xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_policy"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="associated_policy_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_frsr5s213xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_policy"/>
+         </column>
+         <primaryKey column="policy_id" sequenceNumberInPK="1"/>
+         <primaryKey column="associated_policy_id" sequenceNumberInPK="2"/>
+         <index name="constraint_farsrpap" unique="true">
+            <column ascending="true" name="policy_id"/>
+            <column ascending="true" name="associated_policy_id"/>
+         </index>
+         <index name="idx_assoc_pol_assoc_pol_id" unique="false">
+            <column ascending="true" name="associated_policy_id"/>
+         </index>
+      </table>
+      <table name="authentication_execution" numRows="91" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="alias" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="authenticator" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="realm_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_auth_exec_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="flow_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_auth_exec_flow" implied="false" onDeleteCascade="false" schema="keycloak" table="authentication_flow"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="requirement" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="priority" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="7" name="authenticator_flow" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="auth_flow_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="auth_config" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_auth_exec_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_auth_exec_flow" unique="false">
+            <column ascending="true" name="flow_id"/>
+         </index>
+         <index name="idx_auth_exec_realm_flow" unique="false">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="flow_id"/>
+         </index>
+      </table>
+      <table name="authentication_flow" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="flow_id" foreignKey="fk_auth_exec_flow" implied="false" onDeleteCascade="false" schema="keycloak" table="authentication_execution"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="alias" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="description" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="realm_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_auth_flow_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <column autoUpdated="false" defaultValue="'basic-flow'::character varying" digits="0" id="4" name="provider_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="5" name="top_level" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="6" name="built_in" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_auth_flow_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_auth_flow_realm" unique="false">
+            <column ascending="true" name="realm_id"/>
+         </index>
+      </table>
+      <table name="authenticator_config" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="alias" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="realm_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_auth_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_auth_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_auth_config_realm" unique="false">
+            <column ascending="true" name="realm_id"/>
+         </index>
+      </table>
+      <table name="authenticator_config_entry" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="authenticator_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="authenticator_id" sequenceNumberInPK="1"/>
+         <primaryKey column="name" sequenceNumberInPK="2"/>
+         <index name="constraint_auth_cfg_pk" unique="true">
+            <column ascending="true" name="authenticator_id"/>
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table name="broker_link" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="identity_provider" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="storage_provider_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="broker_user_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="broker_username" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="token" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="user_id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="identity_provider" sequenceNumberInPK="1"/>
+         <primaryKey column="user_id" sequenceNumberInPK="2"/>
+         <index name="constr_broker_link_pk" unique="true">
+            <column ascending="true" name="identity_provider"/>
+            <column ascending="true" name="user_id"/>
+         </index>
+      </table>
+      <table name="client" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="client_id" foreignKey="fk3c47c64beacca966" implied="false" onDeleteCascade="false" schema="keycloak" table="client_attributes"/>
+            <child column="client_id" foreignKey="fk4129723ba992f594" implied="false" onDeleteCascade="false" schema="keycloak" table="client_node_registrations"/>
+            <child column="client_id" foreignKey="fk_pcm_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="protocol_mapper"/>
+            <child column="client_id" foreignKey="fk_1burs8pb4ouj97h5wuppahv9f" implied="false" onDeleteCascade="false" schema="keycloak" table="redirect_uris"/>
+            <child column="client_id" foreignKey="fk_ouse064plmlr732lxjcn1q5f1" implied="false" onDeleteCascade="false" schema="keycloak" table="scope_mapping"/>
+            <child column="client_id" foreignKey="fk_lojpho213xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="web_origins"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="1" name="enabled" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="2" name="full_scope_allowed" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="client_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="not_before" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="5" name="public_client" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="secret" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="base_url" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="8" name="bearer_only" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="management_url" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="10" name="surrogate_auth_required" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="realm_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="protocol" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="13" name="node_rereg_timeout" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="14" name="frontchannel_logout" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="15" name="consent_required" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="name" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="17" name="service_accounts_enabled" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="18" name="client_authenticator_type" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="root_url" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="20" name="description" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="21" name="registration_token" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="true" digits="0" id="22" name="standard_flow_enabled" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="23" name="implicit_flow_enabled" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="24" name="direct_access_grants_enabled" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="25" name="always_display_in_console" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_7" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_client_id" unique="false">
+            <column ascending="true" name="client_id"/>
+         </index>
+         <index name="uk_b71cjlbenv945rb6gcon438at" unique="true">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="client_id"/>
+         </index>
+      </table>
+      <table name="client_attributes" numRows="58" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="client_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk3c47c64beacca966" implied="false" onDeleteCascade="false" schema="keycloak" table="client"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="value" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="client_id" sequenceNumberInPK="1"/>
+         <primaryKey column="name" sequenceNumberInPK="2"/>
+         <index name="constraint_3c" unique="true">
+            <column ascending="true" name="client_id"/>
+            <column ascending="true" name="name"/>
+         </index>
+         <index name="idx_client_att_by_name_value" unique="false">
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table name="client_auth_flow_bindings" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="client_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="flow_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="binding_name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="client_id" sequenceNumberInPK="1"/>
+         <primaryKey column="binding_name" sequenceNumberInPK="2"/>
+         <index name="c_cli_flow_bind" unique="true">
+            <column ascending="true" name="client_id"/>
+            <column ascending="true" name="binding_name"/>
+         </index>
+      </table>
+      <table name="client_initial_access" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_client_init_acc_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="timestamp" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="expiration" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="count" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="remaining_count" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="cnstr_client_init_acc_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_client_init_acc_realm" unique="false">
+            <column ascending="true" name="realm_id"/>
+         </index>
+      </table>
+      <table name="client_node_registrations" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="client_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk4129723ba992f594" implied="false" onDeleteCascade="false" schema="keycloak" table="client"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="client_id" sequenceNumberInPK="1"/>
+         <primaryKey column="name" sequenceNumberInPK="2"/>
+         <index name="constraint_84" unique="true">
+            <column ascending="true" name="client_id"/>
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table name="client_scope" numRows="28" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="scope_id" foreignKey="fk_cl_scope_attr_scope" implied="false" onDeleteCascade="false" schema="keycloak" table="client_scope_attributes"/>
+            <child column="scope_id" foreignKey="fk_cl_scope_rm_scope" implied="false" onDeleteCascade="false" schema="keycloak" table="client_scope_role_mapping"/>
+            <child column="client_scope_id" foreignKey="fk_cli_scope_mapper" implied="false" onDeleteCascade="false" schema="keycloak" table="protocol_mapper"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="realm_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="description" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="protocol" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="pk_cli_template" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_realm_clscope" unique="false">
+            <column ascending="true" name="realm_id"/>
+         </index>
+         <index name="uk_cli_scope" unique="true">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table name="client_scope_attributes" numRows="68" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="scope_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_cl_scope_attr_scope" implied="false" onDeleteCascade="false" schema="keycloak" table="client_scope"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="true" remarks="" size="2048" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="scope_id" sequenceNumberInPK="1"/>
+         <primaryKey column="name" sequenceNumberInPK="2"/>
+         <index name="pk_cl_tmpl_attr" unique="true">
+            <column ascending="true" name="scope_id"/>
+            <column ascending="true" name="name"/>
+         </index>
+         <index name="idx_clscope_attrs" unique="false">
+            <column ascending="true" name="scope_id"/>
+         </index>
+      </table>
+      <table name="client_scope_client" numRows="168" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="client_id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="scope_id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="2" name="default_scope" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <primaryKey column="client_id" sequenceNumberInPK="1"/>
+         <primaryKey column="scope_id" sequenceNumberInPK="2"/>
+         <index name="c_cli_scope_bind" unique="true">
+            <column ascending="true" name="client_id"/>
+            <column ascending="true" name="scope_id"/>
+         </index>
+         <index name="idx_cl_clscope" unique="false">
+            <column ascending="true" name="scope_id"/>
+         </index>
+         <index name="idx_clscope_cl" unique="false">
+            <column ascending="true" name="client_id"/>
+         </index>
+      </table>
+      <table name="client_scope_role_mapping" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="scope_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_cl_scope_rm_scope" implied="false" onDeleteCascade="false" schema="keycloak" table="client_scope"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="role_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <primaryKey column="scope_id" sequenceNumberInPK="1"/>
+         <primaryKey column="role_id" sequenceNumberInPK="2"/>
+         <index name="pk_template_scope" unique="true">
+            <column ascending="true" name="scope_id"/>
+            <column ascending="true" name="role_id"/>
+         </index>
+         <index name="idx_clscope_role" unique="false">
+            <column ascending="true" name="scope_id"/>
+         </index>
+         <index name="idx_role_clscope" unique="false">
+            <column ascending="true" name="role_id"/>
+         </index>
+      </table>
+      <table name="component" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="component_id" foreignKey="fk_component_config" implied="false" onDeleteCascade="false" schema="keycloak" table="component_config"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="parent_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="provider_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="provider_type" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="realm_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_component_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="sub_type" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constr_component_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_component_provider_type" unique="false">
+            <column ascending="true" name="provider_type"/>
+         </index>
+         <index name="idx_component_realm" unique="false">
+            <column ascending="true" name="realm_id"/>
+         </index>
+      </table>
+      <table name="component_config" numRows="74" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="component_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_component_config" implied="false" onDeleteCascade="false" schema="keycloak" table="component"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="value" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constr_component_config_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_compo_config_compo" unique="false">
+            <column ascending="true" name="component_id"/>
+         </index>
+      </table>
+      <table name="composite_role" numRows="65" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="composite" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_a63wvekftu8jo1pnj81e7mce2" implied="false" onDeleteCascade="false" schema="keycloak" table="keycloak_role"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="child_role" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_gr7thllb9lu8q4vqa4524jjy8" implied="false" onDeleteCascade="false" schema="keycloak" table="keycloak_role"/>
+         </column>
+         <primaryKey column="composite" sequenceNumberInPK="1"/>
+         <primaryKey column="child_role" sequenceNumberInPK="2"/>
+         <index name="constraint_composite_role" unique="true">
+            <column ascending="true" name="composite"/>
+            <column ascending="true" name="child_role"/>
+         </index>
+         <index name="idx_composite" unique="false">
+            <column ascending="true" name="composite"/>
+         </index>
+         <index name="idx_composite_child" unique="false">
+            <column ascending="true" name="child_role"/>
+         </index>
+      </table>
+      <table name="credential" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="salt" nullable="true" remarks="" size="2147483647" type="bytea" typeCode="-2"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="type" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="user_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_pfyr0glasqyl0dei3kl69r6v0" implied="false" onDeleteCascade="false" schema="keycloak" table="user_entity"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="created_date" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="user_label" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="secret_data" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="credential_data" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="priority" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="9" name="version" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_f" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_user_credential" unique="false">
+            <column ascending="true" name="user_id"/>
+         </index>
+      </table>
+      <table name="databasechangelog" numRows="152" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="author" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="filename" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="3" name="dateexecuted" nullable="false" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="orderexecuted" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="exectype" nullable="false" remarks="" size="10" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="md5sum" nullable="true" remarks="" size="35" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="description" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="comments" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="tag" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="liquibase" nullable="true" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="contexts" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="labels" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="deployment_id" nullable="true" remarks="" size="10" type="varchar" typeCode="12"/>
+      </table>
+      <table name="databasechangeloglock" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="locked" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="2" name="lockgranted" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="lockedby" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="databasechangeloglock_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="default_client_scope" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_r_def_cli_scope_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="scope_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="2" name="default_scope" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <primaryKey column="realm_id" sequenceNumberInPK="1"/>
+         <primaryKey column="scope_id" sequenceNumberInPK="2"/>
+         <index name="r_def_cli_scope_bind" unique="true">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="scope_id"/>
+         </index>
+         <index name="idx_defcls_realm" unique="false">
+            <column ascending="true" name="realm_id"/>
+         </index>
+         <index name="idx_defcls_scope" unique="false">
+            <column ascending="true" name="scope_id"/>
+         </index>
+      </table>
+      <table name="event_entity" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="client_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="details_json" nullable="true" remarks="" size="2550" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="error" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="ip_address" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="realm_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="session_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="event_time" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="type" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="user_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="details_json_long_value" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_4" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_event_time" unique="false">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="event_time"/>
+         </index>
+      </table>
+      <table name="fed_user_attribute" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="user_id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="storage_provider_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="value" nullable="true" remarks="" size="2024" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="long_value_hash" nullable="true" remarks="" size="2147483647" type="bytea" typeCode="-2"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="long_value_hash_lower_case" nullable="true" remarks="" size="2147483647" type="bytea" typeCode="-2"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="long_value" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constr_fed_user_attr_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="fed_user_attr_long_values" unique="false">
+            <column ascending="true" name="long_value_hash"/>
+            <column ascending="true" name="name"/>
+         </index>
+         <index name="fed_user_attr_long_values_lower_case" unique="false">
+            <column ascending="true" name="long_value_hash_lower_case"/>
+            <column ascending="true" name="name"/>
+         </index>
+         <index name="idx_fu_attribute" unique="false">
+            <column ascending="true" name="user_id"/>
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table name="fed_user_consent" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="client_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="user_id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="storage_provider_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="created_date" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="last_updated_date" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="client_storage_provider" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="external_client_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constr_fed_user_consent_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_fu_cnsnt_ext" unique="false">
+            <column ascending="true" name="user_id"/>
+            <column ascending="true" name="client_storage_provider"/>
+            <column ascending="true" name="external_client_id"/>
+         </index>
+         <index name="idx_fu_consent" unique="false">
+            <column ascending="true" name="user_id"/>
+            <column ascending="true" name="client_id"/>
+         </index>
+         <index name="idx_fu_consent_ru" unique="false">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="user_id"/>
+         </index>
+      </table>
+      <table name="fed_user_consent_cl_scope" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="user_consent_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="scope_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <primaryKey column="user_consent_id" sequenceNumberInPK="1"/>
+         <primaryKey column="scope_id" sequenceNumberInPK="2"/>
+         <index name="constraint_fgrntcsnt_clsc_pm" unique="true">
+            <column ascending="true" name="user_consent_id"/>
+            <column ascending="true" name="scope_id"/>
+         </index>
+      </table>
+      <table name="fed_user_credential" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="salt" nullable="true" remarks="" size="2147483647" type="bytea" typeCode="-2"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="type" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="created_date" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="user_id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="storage_provider_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="user_label" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="secret_data" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="credential_data" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="priority" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constr_fed_user_cred_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_fu_credential" unique="false">
+            <column ascending="true" name="user_id"/>
+            <column ascending="true" name="type"/>
+         </index>
+         <index name="idx_fu_credential_ru" unique="false">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="user_id"/>
+         </index>
+      </table>
+      <table name="fed_user_group_membership" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="group_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="user_id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="storage_provider_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <primaryKey column="group_id" sequenceNumberInPK="1"/>
+         <primaryKey column="user_id" sequenceNumberInPK="2"/>
+         <index name="constr_fed_user_group" unique="true">
+            <column ascending="true" name="group_id"/>
+            <column ascending="true" name="user_id"/>
+         </index>
+         <index name="idx_fu_group_membership" unique="false">
+            <column ascending="true" name="user_id"/>
+            <column ascending="true" name="group_id"/>
+         </index>
+         <index name="idx_fu_group_membership_ru" unique="false">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="user_id"/>
+         </index>
+      </table>
+      <table name="fed_user_required_action" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="' '::character varying" digits="0" id="0" name="required_action" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="user_id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="storage_provider_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <primaryKey column="required_action" sequenceNumberInPK="1"/>
+         <primaryKey column="user_id" sequenceNumberInPK="2"/>
+         <index name="constr_fed_required_action" unique="true">
+            <column ascending="true" name="required_action"/>
+            <column ascending="true" name="user_id"/>
+         </index>
+         <index name="idx_fu_required_action" unique="false">
+            <column ascending="true" name="user_id"/>
+            <column ascending="true" name="required_action"/>
+         </index>
+         <index name="idx_fu_required_action_ru" unique="false">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="user_id"/>
+         </index>
+      </table>
+      <table name="fed_user_role_mapping" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="role_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="user_id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="storage_provider_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <primaryKey column="role_id" sequenceNumberInPK="1"/>
+         <primaryKey column="user_id" sequenceNumberInPK="2"/>
+         <index name="constr_fed_user_role" unique="true">
+            <column ascending="true" name="role_id"/>
+            <column ascending="true" name="user_id"/>
+         </index>
+         <index name="idx_fu_role_mapping" unique="false">
+            <column ascending="true" name="user_id"/>
+            <column ascending="true" name="role_id"/>
+         </index>
+         <index name="idx_fu_role_mapping_ru" unique="false">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="user_id"/>
+         </index>
+      </table>
+      <table name="federated_identity" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="identity_provider" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="realm_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="federated_user_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="federated_username" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="token" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="user_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk404288b92ef007a6" implied="false" onDeleteCascade="false" schema="keycloak" table="user_entity"/>
+         </column>
+         <primaryKey column="identity_provider" sequenceNumberInPK="1"/>
+         <primaryKey column="user_id" sequenceNumberInPK="2"/>
+         <index name="constraint_40" unique="true">
+            <column ascending="true" name="identity_provider"/>
+            <column ascending="true" name="user_id"/>
+         </index>
+         <index name="idx_fedidentity_feduser" unique="false">
+            <column ascending="true" name="federated_user_id"/>
+         </index>
+         <index name="idx_fedidentity_user" unique="false">
+            <column ascending="true" name="user_id"/>
+         </index>
+      </table>
+      <table name="federated_user" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="storage_provider_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constr_federated_user" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="group_attribute" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="'sybase-needs-something-here'::character varying" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="value" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="group_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_group_attribute_group" implied="false" onDeleteCascade="false" schema="keycloak" table="keycloak_group"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_group_attribute_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_group_att_by_name_value" unique="false">
+            <column ascending="true" name="name"/>
+         </index>
+         <index name="idx_group_attr_group" unique="false">
+            <column ascending="true" name="group_id"/>
+         </index>
+      </table>
+      <table name="group_role_mapping" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="role_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="group_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_group_role_group" implied="false" onDeleteCascade="false" schema="keycloak" table="keycloak_group"/>
+         </column>
+         <primaryKey column="role_id" sequenceNumberInPK="1"/>
+         <primaryKey column="group_id" sequenceNumberInPK="2"/>
+         <index name="constraint_group_role" unique="true">
+            <column ascending="true" name="role_id"/>
+            <column ascending="true" name="group_id"/>
+         </index>
+         <index name="idx_group_role_mapp_group" unique="false">
+            <column ascending="true" name="group_id"/>
+         </index>
+      </table>
+      <table name="identity_provider" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="internal_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="identity_provider_id" foreignKey="fkdc4897cf864c4e43" implied="false" onDeleteCascade="false" schema="keycloak" table="identity_provider_config"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="1" name="enabled" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="provider_alias" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="provider_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="4" name="store_token" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="5" name="authenticate_by_default" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="realm_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk2b4ebc52ae5c3b34" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <column autoUpdated="false" defaultValue="true" digits="0" id="7" name="add_token_role" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="8" name="trust_email" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="first_broker_login_flow_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="post_broker_login_flow_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="provider_display_name" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="12" name="link_only" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="organization_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="14" name="hide_on_login" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <primaryKey column="internal_id" sequenceNumberInPK="1"/>
+         <index name="constraint_2b" unique="true">
+            <column ascending="true" name="internal_id"/>
+         </index>
+         <index name="idx_ident_prov_realm" unique="false">
+            <column ascending="true" name="realm_id"/>
+         </index>
+         <index name="idx_idp_for_login" unique="false">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="enabled"/>
+            <column ascending="true" name="link_only"/>
+            <column ascending="true" name="hide_on_login"/>
+            <column ascending="true" name="organization_id"/>
+         </index>
+         <index name="idx_idp_realm_org" unique="false">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="organization_id"/>
+         </index>
+         <index name="uk_2daelwnibji49avxsrtuf6xj33" unique="true">
+            <column ascending="true" name="provider_alias"/>
+            <column ascending="true" name="realm_id"/>
+         </index>
+      </table>
+      <table name="identity_provider_config" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="identity_provider_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="internal_id" foreignKey="fkdc4897cf864c4e43" implied="false" onDeleteCascade="false" schema="keycloak" table="identity_provider"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="identity_provider_id" sequenceNumberInPK="1"/>
+         <primaryKey column="name" sequenceNumberInPK="2"/>
+         <index name="constraint_d" unique="true">
+            <column ascending="true" name="identity_provider_id"/>
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table name="identity_provider_mapper" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="idp_mapper_id" foreignKey="fk_idpmconfig" implied="false" onDeleteCascade="false" schema="keycloak" table="idp_mapper_config"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="idp_alias" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="idp_mapper_name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_idpm_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_idpm" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_id_prov_mapp_realm" unique="false">
+            <column ascending="true" name="realm_id"/>
+         </index>
+      </table>
+      <table name="idp_mapper_config" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="idp_mapper_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_idpmconfig" implied="false" onDeleteCascade="false" schema="keycloak" table="identity_provider_mapper"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="idp_mapper_id" sequenceNumberInPK="1"/>
+         <primaryKey column="name" sequenceNumberInPK="2"/>
+         <index name="constraint_idpmconfig" unique="true">
+            <column ascending="true" name="idp_mapper_id"/>
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table name="jgroups_ping" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="address" nullable="false" remarks="" size="200" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="true" remarks="" size="200" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="cluster_name" nullable="false" remarks="" size="200" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="ip" nullable="false" remarks="" size="200" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="coord" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <primaryKey column="address" sequenceNumberInPK="1"/>
+         <index name="constraint_jgroups_ping" unique="true">
+            <column ascending="true" name="address"/>
+         </index>
+      </table>
+      <table name="keycloak_group" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="group_id" foreignKey="fk_group_attribute_group" implied="false" onDeleteCascade="false" schema="keycloak" table="group_attribute"/>
+            <child column="group_id" foreignKey="fk_group_role_group" implied="false" onDeleteCascade="false" schema="keycloak" table="group_role_mapping"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="parent_group" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="realm_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="4" name="type" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_group" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="sibling_names" unique="true">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="parent_group"/>
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table name="keycloak_role" numRows="68" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="child_role" foreignKey="fk_gr7thllb9lu8q4vqa4524jjy8" implied="false" onDeleteCascade="false" schema="keycloak" table="composite_role"/>
+            <child column="composite" foreignKey="fk_a63wvekftu8jo1pnj81e7mce2" implied="false" onDeleteCascade="false" schema="keycloak" table="composite_role"/>
+            <child column="role_id" foreignKey="fk_role_attribute_id" implied="false" onDeleteCascade="false" schema="keycloak" table="role_attribute"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="client_realm_constraint" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="2" name="client_role" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="description" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="name" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="realm_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="client" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="realm" nullable="true" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_6vyqfe4cn4wlq8r6kt5vdsj5c" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_a" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_keycloak_role_client" unique="false">
+            <column ascending="true" name="client"/>
+         </index>
+         <index name="idx_keycloak_role_realm" unique="false">
+            <column ascending="true" name="realm"/>
+         </index>
+         <index name="UK_J3RWUVD56ONTGSUHOGM184WW2-2" unique="true">
+            <column ascending="true" name="name"/>
+            <column ascending="true" name="client_realm_constraint"/>
+         </index>
+      </table>
+      <table name="migration_model" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="version" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="2" name="update_time" nullable="false" remarks="" size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_migmod" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_update_time" unique="false">
+            <column ascending="true" name="update_time"/>
+         </index>
+      </table>
+      <table name="offline_client_session" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="user_session_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="client_id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="offline_flag" nullable="false" remarks="" size="4" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="timestamp" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="data" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="'local'::character varying" digits="0" id="5" name="client_storage_provider" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="'local'::character varying" digits="0" id="6" name="external_client_id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="7" name="version" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <primaryKey column="user_session_id" sequenceNumberInPK="1"/>
+         <primaryKey column="client_id" sequenceNumberInPK="2"/>
+         <primaryKey column="client_storage_provider" sequenceNumberInPK="3"/>
+         <primaryKey column="external_client_id" sequenceNumberInPK="4"/>
+         <primaryKey column="offline_flag" sequenceNumberInPK="5"/>
+         <index name="constraint_offl_cl_ses_pk3" unique="true">
+            <column ascending="true" name="user_session_id"/>
+            <column ascending="true" name="client_id"/>
+            <column ascending="true" name="client_storage_provider"/>
+            <column ascending="true" name="external_client_id"/>
+            <column ascending="true" name="offline_flag"/>
+         </index>
+      </table>
+      <table name="offline_user_session" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="user_session_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="user_id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="created_on" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="offline_flag" nullable="false" remarks="" size="4" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="data" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="6" name="last_session_refresh" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="broker_session_id" nullable="true" remarks="" size="1024" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="8" name="version" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <primaryKey column="user_session_id" sequenceNumberInPK="1"/>
+         <primaryKey column="offline_flag" sequenceNumberInPK="2"/>
+         <index name="constraint_offl_us_ses_pk2" unique="true">
+            <column ascending="true" name="user_session_id"/>
+            <column ascending="true" name="offline_flag"/>
+         </index>
+         <index name="idx_offline_uss_by_broker_session_id" unique="false">
+            <column ascending="true" name="broker_session_id"/>
+            <column ascending="true" name="realm_id"/>
+         </index>
+         <index name="idx_offline_uss_by_last_session_refresh" unique="false">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="offline_flag"/>
+            <column ascending="true" name="last_session_refresh"/>
+         </index>
+         <index name="idx_offline_uss_by_user" unique="false">
+            <column ascending="true" name="user_id"/>
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="offline_flag"/>
+         </index>
+      </table>
+      <table name="org" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="enabled" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="realm_id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="group_id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="description" nullable="true" remarks="" size="4000" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="alias" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="redirect_url" nullable="true" remarks="" size="2048" type="varchar" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="ORG_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="uk_org_alias" unique="true">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="alias"/>
+         </index>
+         <index name="uk_org_group" unique="true">
+            <column ascending="true" name="group_id"/>
+         </index>
+         <index name="uk_org_name" unique="true">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table name="org_domain" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="verified" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="org_id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <primaryKey column="name" sequenceNumberInPK="2"/>
+         <index name="ORG_DOMAIN_pkey" unique="true">
+            <column ascending="true" name="id"/>
+            <column ascending="true" name="name"/>
+         </index>
+         <index name="idx_org_domain_org_id" unique="false">
+            <column ascending="true" name="org_id"/>
+         </index>
+      </table>
+      <table name="policy_config" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="policy_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fkdc34197cf864c4e43" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_policy"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="value" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="policy_id" sequenceNumberInPK="1"/>
+         <primaryKey column="name" sequenceNumberInPK="2"/>
+         <index name="constraint_dpc" unique="true">
+            <column ascending="true" name="policy_id"/>
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table name="protocol_mapper" numRows="72" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="protocol_mapper_id" foreignKey="fk_pmconfig" implied="false" onDeleteCascade="false" schema="keycloak" table="protocol_mapper_config"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="protocol" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="protocol_mapper_name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="client_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_pcm_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="client"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="client_scope_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_cli_scope_mapper" implied="false" onDeleteCascade="false" schema="keycloak" table="client_scope"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_pcm" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_clscope_protmap" unique="false">
+            <column ascending="true" name="client_scope_id"/>
+         </index>
+         <index name="idx_protocol_mapper_client" unique="false">
+            <column ascending="true" name="client_id"/>
+         </index>
+      </table>
+      <table name="protocol_mapper_config" numRows="416" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="protocol_mapper_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_pmconfig" implied="false" onDeleteCascade="false" schema="keycloak" table="protocol_mapper"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="protocol_mapper_id" sequenceNumberInPK="1"/>
+         <primaryKey column="name" sequenceNumberInPK="2"/>
+         <index name="constraint_pmconfig" unique="true">
+            <column ascending="true" name="protocol_mapper_id"/>
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table name="realm" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="realm_id" foreignKey="fk_auth_exec_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="authentication_execution"/>
+            <child column="realm_id" foreignKey="fk_auth_flow_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="authentication_flow"/>
+            <child column="realm_id" foreignKey="fk_auth_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="authenticator_config"/>
+            <child column="realm_id" foreignKey="fk_client_init_acc_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="client_initial_access"/>
+            <child column="realm_id" foreignKey="fk_component_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="component"/>
+            <child column="realm_id" foreignKey="fk_r_def_cli_scope_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="default_client_scope"/>
+            <child column="realm_id" foreignKey="fk2b4ebc52ae5c3b34" implied="false" onDeleteCascade="false" schema="keycloak" table="identity_provider"/>
+            <child column="realm_id" foreignKey="fk_idpm_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="identity_provider_mapper"/>
+            <child column="realm" foreignKey="fk_6vyqfe4cn4wlq8r6kt5vdsj5c" implied="false" onDeleteCascade="false" schema="keycloak" table="keycloak_role"/>
+            <child column="realm_id" foreignKey="fk_8shxd6l3e9atqukacxgpffptw" implied="false" onDeleteCascade="false" schema="keycloak" table="realm_attribute"/>
+            <child column="realm_id" foreignKey="fk_def_groups_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="realm_default_groups"/>
+            <child column="realm_id" foreignKey="fk_h846o4h0w8epx5nwedrf5y69j" implied="false" onDeleteCascade="false" schema="keycloak" table="realm_enabled_event_types"/>
+            <child column="realm_id" foreignKey="fk_h846o4h0w8epx5nxev9f5y69j" implied="false" onDeleteCascade="false" schema="keycloak" table="realm_events_listeners"/>
+            <child column="realm_id" foreignKey="fk_5hg65lybevavkqfki3kponh9v" implied="false" onDeleteCascade="false" schema="keycloak" table="realm_required_credential"/>
+            <child column="realm_id" foreignKey="fk_70ej8xdxgxd0b9hh6180irr0o" implied="false" onDeleteCascade="false" schema="keycloak" table="realm_smtp_config"/>
+            <child column="realm_id" foreignKey="fk_supported_locales_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="realm_supported_locales"/>
+            <child column="realm_id" foreignKey="fk_req_act_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="required_action_provider"/>
+            <child column="realm_id" foreignKey="fk_fedmapperpm_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="user_federation_mapper"/>
+            <child column="realm_id" foreignKey="fk_1fj32f6ptolw2qy60cd8n01e8" implied="false" onDeleteCascade="false" schema="keycloak" table="user_federation_provider"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="access_code_lifespan" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="user_action_lifespan" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="access_token_lifespan" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="account_theme" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="admin_theme" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="email_theme" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="7" name="enabled" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="8" name="events_enabled" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="events_expiration" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="login_theme" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="name" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="not_before" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="password_policy" nullable="true" remarks="" size="2550" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="14" name="registration_allowed" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="15" name="remember_me" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="16" name="reset_password_allowed" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="17" name="social" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="18" name="ssl_required" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="sso_idle_timeout" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="20" name="sso_max_lifespan" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="21" name="update_profile_on_soc_login" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="22" name="verify_email" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="23" name="master_admin_client" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="24" name="login_lifespan" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="25" name="internationalization_enabled" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="26" name="default_locale" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="27" name="reg_email_as_username" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="28" name="admin_events_enabled" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="29" name="admin_events_details_enabled" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="30" name="edit_username_allowed" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="31" name="otp_policy_counter" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="32" name="otp_policy_window" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="30" digits="0" id="33" name="otp_policy_period" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="6" digits="0" id="34" name="otp_policy_digits" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="'HmacSHA1'::character varying" digits="0" id="35" name="otp_policy_alg" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="'totp'::character varying" digits="0" id="36" name="otp_policy_type" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="37" name="browser_flow" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="38" name="registration_flow" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="39" name="direct_grant_flow" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="40" name="reset_credentials_flow" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="41" name="client_auth_flow" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="42" name="offline_session_idle_timeout" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="43" name="revoke_refresh_token" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="44" name="access_token_life_implicit" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="true" digits="0" id="45" name="login_with_email_allowed" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="46" name="duplicate_emails_allowed" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="47" name="docker_auth_flow" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="48" name="refresh_token_max_reuse" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="49" name="allow_user_managed_access" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="50" name="sso_max_lifespan_remember_me" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="51" name="sso_idle_timeout_remember_me" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="52" name="default_role" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_4a" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_realm_master_adm_cli" unique="false">
+            <column ascending="true" name="master_admin_client"/>
+         </index>
+         <index name="uk_orvsdmla56612eaefiq6wl5oi" unique="true">
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table name="realm_attribute" numRows="123" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_8shxd6l3e9atqukacxgpffptw" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="value" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="name" sequenceNumberInPK="1"/>
+         <primaryKey column="realm_id" sequenceNumberInPK="2"/>
+         <index name="constraint_9" unique="true">
+            <column ascending="true" name="name"/>
+            <column ascending="true" name="realm_id"/>
+         </index>
+         <index name="idx_realm_attr_realm" unique="false">
+            <column ascending="true" name="realm_id"/>
+         </index>
+      </table>
+      <table name="realm_default_groups" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_def_groups_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="group_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <primaryKey column="realm_id" sequenceNumberInPK="1"/>
+         <primaryKey column="group_id" sequenceNumberInPK="2"/>
+         <index name="constr_realm_default_groups" unique="true">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="group_id"/>
+         </index>
+         <index name="con_group_id_def_groups" unique="true">
+            <column ascending="true" name="group_id"/>
+         </index>
+         <index name="idx_realm_def_grp_realm" unique="false">
+            <column ascending="true" name="realm_id"/>
+         </index>
+      </table>
+      <table name="realm_enabled_event_types" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_h846o4h0w8epx5nwedrf5y69j" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="realm_id" sequenceNumberInPK="1"/>
+         <primaryKey column="value" sequenceNumberInPK="2"/>
+         <index name="constr_realm_enabl_event_types" unique="true">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="value"/>
+         </index>
+         <index name="idx_realm_evt_types_realm" unique="false">
+            <column ascending="true" name="realm_id"/>
+         </index>
+      </table>
+      <table name="realm_events_listeners" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_h846o4h0w8epx5nxev9f5y69j" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="realm_id" sequenceNumberInPK="1"/>
+         <primaryKey column="value" sequenceNumberInPK="2"/>
+         <index name="constr_realm_events_listeners" unique="true">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="value"/>
+         </index>
+         <index name="idx_realm_evt_list_realm" unique="false">
+            <column ascending="true" name="realm_id"/>
+         </index>
+      </table>
+      <table name="realm_localizations" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="realm_id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="locale" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="texts" nullable="false" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="realm_id" sequenceNumberInPK="1"/>
+         <primaryKey column="locale" sequenceNumberInPK="2"/>
+         <index name="realm_localizations_pkey" unique="true">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="locale"/>
+         </index>
+      </table>
+      <table name="realm_required_credential" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="type" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="form_label" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="2" name="input" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="3" name="secret" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_5hg65lybevavkqfki3kponh9v" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <primaryKey column="realm_id" sequenceNumberInPK="1"/>
+         <primaryKey column="type" sequenceNumberInPK="2"/>
+         <index name="constraint_92" unique="true">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="type"/>
+         </index>
+      </table>
+      <table name="realm_smtp_config" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_70ej8xdxgxd0b9hh6180irr0o" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="realm_id" sequenceNumberInPK="1"/>
+         <primaryKey column="name" sequenceNumberInPK="2"/>
+         <index name="constraint_e" unique="true">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table name="realm_supported_locales" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_supported_locales_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="realm_id" sequenceNumberInPK="1"/>
+         <primaryKey column="value" sequenceNumberInPK="2"/>
+         <index name="constr_realm_supported_locales" unique="true">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="value"/>
+         </index>
+         <index name="idx_realm_supp_local_realm" unique="false">
+            <column ascending="true" name="realm_id"/>
+         </index>
+      </table>
+      <table name="redirect_uris" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="client_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_1burs8pb4ouj97h5wuppahv9f" implied="false" onDeleteCascade="false" schema="keycloak" table="client"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="client_id" sequenceNumberInPK="1"/>
+         <primaryKey column="value" sequenceNumberInPK="2"/>
+         <index name="constraint_redirect_uris" unique="true">
+            <column ascending="true" name="client_id"/>
+            <column ascending="true" name="value"/>
+         </index>
+         <index name="idx_redir_uri_client" unique="false">
+            <column ascending="true" name="client_id"/>
+         </index>
+      </table>
+      <table name="required_action_config" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="required_action_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="required_action_id" sequenceNumberInPK="1"/>
+         <primaryKey column="name" sequenceNumberInPK="2"/>
+         <index name="constraint_req_act_cfg_pk" unique="true">
+            <column ascending="true" name="required_action_id"/>
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table name="required_action_provider" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="alias" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="name" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="realm_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_req_act_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="4" name="enabled" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="5" name="default_action" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="provider_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="priority" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_req_act_prv_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_req_act_prov_realm" unique="false">
+            <column ascending="true" name="realm_id"/>
+         </index>
+      </table>
+      <table name="resource_attribute" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="'sybase-needs-something-here'::character varying" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="value" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="resource_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_5hrm2vlf9ql5fu022kqepovbr" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_resource"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="res_attr_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="resource_policy" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="resource_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_frsrpos53xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_resource"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="policy_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_frsrpp213xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_policy"/>
+         </column>
+         <primaryKey column="resource_id" sequenceNumberInPK="1"/>
+         <primaryKey column="policy_id" sequenceNumberInPK="2"/>
+         <index name="constraint_farsrpp" unique="true">
+            <column ascending="true" name="resource_id"/>
+            <column ascending="true" name="policy_id"/>
+         </index>
+         <index name="idx_res_policy_policy" unique="false">
+            <column ascending="true" name="policy_id"/>
+         </index>
+      </table>
+      <table name="resource_scope" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="resource_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_frsrpos13xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_resource"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="scope_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_frsrps213xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_scope"/>
+         </column>
+         <primaryKey column="resource_id" sequenceNumberInPK="1"/>
+         <primaryKey column="scope_id" sequenceNumberInPK="2"/>
+         <index name="constraint_farsrsp" unique="true">
+            <column ascending="true" name="resource_id"/>
+            <column ascending="true" name="scope_id"/>
+         </index>
+         <index name="idx_res_scope_scope" unique="false">
+            <column ascending="true" name="scope_id"/>
+         </index>
+      </table>
+      <table name="resource_server" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="resource_server_id" foreignKey="fk_frsrho213xcx4wnkog82sspmt" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_perm_ticket"/>
+            <child column="resource_server_id" foreignKey="fk_frsrpo213xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_policy"/>
+            <child column="resource_server_id" foreignKey="fk_frsrho213xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_resource"/>
+            <child column="resource_server_id" foreignKey="fk_frsrso213xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_scope"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="1" name="allow_rs_remote_mgmt" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="policy_enforce_mode" nullable="false" remarks="" size="5" type="int2" typeCode="5"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="3" name="decision_strategy" nullable="false" remarks="" size="5" type="int2" typeCode="5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="pk_resource_server" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="resource_server_perm_ticket" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="owner" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="requester" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="created_timestamp" nullable="false" remarks="" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="granted_timestamp" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="resource_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_frsrho213xcx4wnkog83sspmt" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_resource"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="scope_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_frsrho213xcx4wnkog84sspmt" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_scope"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="resource_server_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_frsrho213xcx4wnkog82sspmt" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="policy_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_frsrpo2128cx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_policy"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_fapmt" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_perm_ticket_owner" unique="false">
+            <column ascending="true" name="owner"/>
+         </index>
+         <index name="idx_perm_ticket_requester" unique="false">
+            <column ascending="true" name="requester"/>
+         </index>
+         <index name="uk_frsr6t700s9v50bu18ws5pmt" unique="true">
+            <column ascending="true" name="owner"/>
+            <column ascending="true" name="requester"/>
+            <column ascending="true" name="resource_server_id"/>
+            <column ascending="true" name="resource_id"/>
+            <column ascending="true" name="scope_id"/>
+         </index>
+      </table>
+      <table name="resource_server_policy" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="associated_policy_id" foreignKey="fk_frsr5s213xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="associated_policy"/>
+            <child column="policy_id" foreignKey="fk_frsrpas14xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="associated_policy"/>
+            <child column="policy_id" foreignKey="fkdc34197cf864c4e43" implied="false" onDeleteCascade="false" schema="keycloak" table="policy_config"/>
+            <child column="policy_id" foreignKey="fk_frsrpp213xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_policy"/>
+            <child column="policy_id" foreignKey="fk_frsrpo2128cx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_perm_ticket"/>
+            <child column="policy_id" foreignKey="fk_frsrasp13xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="scope_policy"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="description" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="type" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="decision_strategy" nullable="true" remarks="" size="5" type="int2" typeCode="5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="logic" nullable="true" remarks="" size="5" type="int2" typeCode="5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="resource_server_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_frsrpo213xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="owner" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_farsrp" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_res_serv_pol_res_serv" unique="false">
+            <column ascending="true" name="resource_server_id"/>
+         </index>
+         <index name="uk_frsrpt700s9v50bu18ws5ha6" unique="true">
+            <column ascending="true" name="name"/>
+            <column ascending="true" name="resource_server_id"/>
+         </index>
+      </table>
+      <table name="resource_server_resource" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="resource_id" foreignKey="fk_5hrm2vlf9ql5fu022kqepovbr" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_attribute"/>
+            <child column="resource_id" foreignKey="fk_frsrpos53xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_policy"/>
+            <child column="resource_id" foreignKey="fk_frsrpos13xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_scope"/>
+            <child column="resource_id" foreignKey="fk_frsrho213xcx4wnkog83sspmt" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_perm_ticket"/>
+            <child column="resource_id" foreignKey="fk_resource_server_uris" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_uris"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="type" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="icon_uri" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="owner" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="resource_server_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_frsrho213xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="6" name="owner_managed_access" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="display_name" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_farsr" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_res_srv_res_res_srv" unique="false">
+            <column ascending="true" name="resource_server_id"/>
+         </index>
+         <index name="uk_frsr6t700s9v50bu18ws5ha6" unique="true">
+            <column ascending="true" name="name"/>
+            <column ascending="true" name="owner"/>
+            <column ascending="true" name="resource_server_id"/>
+         </index>
+      </table>
+      <table name="resource_server_scope" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="scope_id" foreignKey="fk_frsrps213xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_scope"/>
+            <child column="scope_id" foreignKey="fk_frsrho213xcx4wnkog84sspmt" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_perm_ticket"/>
+            <child column="scope_id" foreignKey="fk_frsrpass3xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="scope_policy"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="icon_uri" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="resource_server_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_frsrso213xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="display_name" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_farsrs" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_res_srv_scope_res_srv" unique="false">
+            <column ascending="true" name="resource_server_id"/>
+         </index>
+         <index name="uk_frsrst700s9v50bu18ws5ha6" unique="true">
+            <column ascending="true" name="name"/>
+            <column ascending="true" name="resource_server_id"/>
+         </index>
+      </table>
+      <table name="resource_uris" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="resource_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_resource_server_uris" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_resource"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="resource_id" sequenceNumberInPK="1"/>
+         <primaryKey column="value" sequenceNumberInPK="2"/>
+         <index name="constraint_resour_uris_pk" unique="true">
+            <column ascending="true" name="resource_id"/>
+            <column ascending="true" name="value"/>
+         </index>
+      </table>
+      <table name="revoked_token" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="expire" nullable="false" remarks="" size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_rt" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_rev_token_on_expire" unique="false">
+            <column ascending="true" name="expire"/>
+         </index>
+      </table>
+      <table name="role_attribute" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="role_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_role_attribute_id" implied="false" onDeleteCascade="false" schema="keycloak" table="keycloak_role"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="value" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_role_attribute_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_role_attribute" unique="false">
+            <column ascending="true" name="role_id"/>
+         </index>
+      </table>
+      <table name="scope_mapping" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="client_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_ouse064plmlr732lxjcn1q5f1" implied="false" onDeleteCascade="false" schema="keycloak" table="client"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="role_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <primaryKey column="client_id" sequenceNumberInPK="1"/>
+         <primaryKey column="role_id" sequenceNumberInPK="2"/>
+         <index name="constraint_81" unique="true">
+            <column ascending="true" name="client_id"/>
+            <column ascending="true" name="role_id"/>
+         </index>
+         <index name="idx_scope_mapping_role" unique="false">
+            <column ascending="true" name="role_id"/>
+         </index>
+      </table>
+      <table name="scope_policy" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="scope_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_frsrpass3xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_scope"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="policy_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_frsrasp13xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="resource_server_policy"/>
+         </column>
+         <primaryKey column="scope_id" sequenceNumberInPK="1"/>
+         <primaryKey column="policy_id" sequenceNumberInPK="2"/>
+         <index name="constraint_farsrsps" unique="true">
+            <column ascending="true" name="scope_id"/>
+            <column ascending="true" name="policy_id"/>
+         </index>
+         <index name="idx_scope_policy_policy" unique="false">
+            <column ascending="true" name="policy_id"/>
+         </index>
+      </table>
+      <table name="server_config" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="server_config_key" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="false" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="2" name="version" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <primaryKey column="server_config_key" sequenceNumberInPK="1"/>
+         <index name="SERVER_CONFIG_pkey" unique="true">
+            <column ascending="true" name="server_config_key"/>
+         </index>
+      </table>
+      <table name="user_attribute" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="user_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_5hrm2vlf9ql5fu043kqepovbr" implied="false" onDeleteCascade="false" schema="keycloak" table="user_entity"/>
+         </column>
+         <column autoUpdated="false" defaultValue="'sybase-needs-something-here'::character varying" digits="0" id="3" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="long_value_hash" nullable="true" remarks="" size="2147483647" type="bytea" typeCode="-2"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="long_value_hash_lower_case" nullable="true" remarks="" size="2147483647" type="bytea" typeCode="-2"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="long_value" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_user_attribute_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_user_attribute" unique="false">
+            <column ascending="true" name="user_id"/>
+         </index>
+         <index name="idx_user_attribute_name" unique="false">
+            <column ascending="true" name="name"/>
+            <column ascending="true" name="value"/>
+         </index>
+         <index name="user_attr_long_values" unique="false">
+            <column ascending="true" name="long_value_hash"/>
+            <column ascending="true" name="name"/>
+         </index>
+         <index name="user_attr_long_values_lower_case" unique="false">
+            <column ascending="true" name="long_value_hash_lower_case"/>
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table name="user_consent" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="user_consent_id" foreignKey="fk_grntcsnt_clsc_usc" implied="false" onDeleteCascade="false" schema="keycloak" table="user_consent_client_scope"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="client_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="user_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_grntcsnt_user" implied="false" onDeleteCascade="false" schema="keycloak" table="user_entity"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="created_date" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="last_updated_date" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="client_storage_provider" nullable="true" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="external_client_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_grntcsnt_pm" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_user_consent" unique="false">
+            <column ascending="true" name="user_id"/>
+         </index>
+         <index name="uk_external_consent" unique="true">
+            <column ascending="true" name="client_storage_provider"/>
+            <column ascending="true" name="external_client_id"/>
+            <column ascending="true" name="user_id"/>
+         </index>
+         <index name="uk_local_consent" unique="true">
+            <column ascending="true" name="client_id"/>
+            <column ascending="true" name="user_id"/>
+         </index>
+      </table>
+      <table name="user_consent_client_scope" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="user_consent_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_grntcsnt_clsc_usc" implied="false" onDeleteCascade="false" schema="keycloak" table="user_consent"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="scope_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <primaryKey column="user_consent_id" sequenceNumberInPK="1"/>
+         <primaryKey column="scope_id" sequenceNumberInPK="2"/>
+         <index name="constraint_grntcsnt_clsc_pm" unique="true">
+            <column ascending="true" name="user_consent_id"/>
+            <column ascending="true" name="scope_id"/>
+         </index>
+         <index name="idx_usconsent_clscope" unique="false">
+            <column ascending="true" name="user_consent_id"/>
+         </index>
+         <index name="idx_usconsent_scope_id" unique="false">
+            <column ascending="true" name="scope_id"/>
+         </index>
+      </table>
+      <table name="user_entity" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="user_id" foreignKey="fk_pfyr0glasqyl0dei3kl69r6v0" implied="false" onDeleteCascade="false" schema="keycloak" table="credential"/>
+            <child column="user_id" foreignKey="fk404288b92ef007a6" implied="false" onDeleteCascade="false" schema="keycloak" table="federated_identity"/>
+            <child column="user_id" foreignKey="fk_5hrm2vlf9ql5fu043kqepovbr" implied="false" onDeleteCascade="false" schema="keycloak" table="user_attribute"/>
+            <child column="user_id" foreignKey="fk_grntcsnt_user" implied="false" onDeleteCascade="false" schema="keycloak" table="user_consent"/>
+            <child column="user_id" foreignKey="fk_user_group_user" implied="false" onDeleteCascade="false" schema="keycloak" table="user_group_membership"/>
+            <child column="user_id" foreignKey="fk_6qj3w1jw9cvafhe19bwsiuvmd" implied="false" onDeleteCascade="false" schema="keycloak" table="user_required_action"/>
+            <child column="user_id" foreignKey="fk_c4fqv34p1mbylloxang7b1q3l" implied="false" onDeleteCascade="false" schema="keycloak" table="user_role_mapping"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="email" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="email_constraint" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="3" name="email_verified" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="4" name="enabled" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="federation_link" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="first_name" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="last_name" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="realm_id" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="username" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="created_timestamp" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="service_account_client_link" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="12" name="not_before" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_fb" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_user_email" unique="false">
+            <column ascending="true" name="email"/>
+         </index>
+         <index name="idx_user_service_account" unique="false">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="service_account_client_link"/>
+         </index>
+         <index name="uk_dykn684sl8up1crfei6eckhd7" unique="true">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="email_constraint"/>
+         </index>
+         <index name="uk_ru8tt6t700s9v50bu18ws5ha6" unique="true">
+            <column ascending="true" name="realm_id"/>
+            <column ascending="true" name="username"/>
+         </index>
+      </table>
+      <table name="user_federation_config" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="user_federation_provider_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_t13hpu1j94r2ebpekr39x5eu5" implied="false" onDeleteCascade="false" schema="keycloak" table="user_federation_provider"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="user_federation_provider_id" sequenceNumberInPK="1"/>
+         <primaryKey column="name" sequenceNumberInPK="2"/>
+         <index name="constraint_f9" unique="true">
+            <column ascending="true" name="user_federation_provider_id"/>
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table name="user_federation_mapper" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="user_federation_mapper_id" foreignKey="fk_fedmapper_cfg" implied="false" onDeleteCascade="false" schema="keycloak" table="user_federation_mapper_config"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="federation_provider_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_fedmapperpm_fedprv" implied="false" onDeleteCascade="false" schema="keycloak" table="user_federation_provider"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="federation_mapper_type" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="realm_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_fedmapperpm_realm" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_fedmapperpm" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_usr_fed_map_fed_prv" unique="false">
+            <column ascending="true" name="federation_provider_id"/>
+         </index>
+         <index name="idx_usr_fed_map_realm" unique="false">
+            <column ascending="true" name="realm_id"/>
+         </index>
+      </table>
+      <table name="user_federation_mapper_config" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="user_federation_mapper_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_fedmapper_cfg" implied="false" onDeleteCascade="false" schema="keycloak" table="user_federation_mapper"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="user_federation_mapper_id" sequenceNumberInPK="1"/>
+         <primaryKey column="name" sequenceNumberInPK="2"/>
+         <index name="constraint_fedmapper_cfg_pm" unique="true">
+            <column ascending="true" name="user_federation_mapper_id"/>
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table name="user_federation_provider" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <child column="user_federation_provider_id" foreignKey="fk_t13hpu1j94r2ebpekr39x5eu5" implied="false" onDeleteCascade="false" schema="keycloak" table="user_federation_config"/>
+            <child column="federation_provider_id" foreignKey="fk_fedmapperpm_fedprv" implied="false" onDeleteCascade="false" schema="keycloak" table="user_federation_mapper"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="changed_sync_period" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="full_sync_period" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="last_sync" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="priority" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="provider_name" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="realm_id" nullable="true" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_1fj32f6ptolw2qy60cd8n01e8" implied="false" onDeleteCascade="false" schema="keycloak" table="realm"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="constraint_5c" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="idx_usr_fed_prv_realm" unique="false">
+            <column ascending="true" name="realm_id"/>
+         </index>
+      </table>
+      <table name="user_group_membership" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="group_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="user_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_user_group_user" implied="false" onDeleteCascade="false" schema="keycloak" table="user_entity"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="membership_type" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="group_id" sequenceNumberInPK="1"/>
+         <primaryKey column="user_id" sequenceNumberInPK="2"/>
+         <index name="constraint_user_group" unique="true">
+            <column ascending="true" name="group_id"/>
+            <column ascending="true" name="user_id"/>
+         </index>
+         <index name="idx_user_group_mapping" unique="false">
+            <column ascending="true" name="user_id"/>
+         </index>
+      </table>
+      <table name="user_required_action" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="user_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_6qj3w1jw9cvafhe19bwsiuvmd" implied="false" onDeleteCascade="false" schema="keycloak" table="user_entity"/>
+         </column>
+         <column autoUpdated="false" defaultValue="' '::character varying" digits="0" id="1" name="required_action" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="required_action" sequenceNumberInPK="1"/>
+         <primaryKey column="user_id" sequenceNumberInPK="2"/>
+         <index name="constraint_required_action" unique="true">
+            <column ascending="true" name="required_action"/>
+            <column ascending="true" name="user_id"/>
+         </index>
+         <index name="idx_user_reqactions" unique="false">
+            <column ascending="true" name="user_id"/>
+         </index>
+      </table>
+      <table name="user_role_mapping" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="role_id" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="user_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_c4fqv34p1mbylloxang7b1q3l" implied="false" onDeleteCascade="false" schema="keycloak" table="user_entity"/>
+         </column>
+         <primaryKey column="role_id" sequenceNumberInPK="1"/>
+         <primaryKey column="user_id" sequenceNumberInPK="2"/>
+         <index name="constraint_c" unique="true">
+            <column ascending="true" name="role_id"/>
+            <column ascending="true" name="user_id"/>
+         </index>
+         <index name="idx_user_role_mapping" unique="false">
+            <column ascending="true" name="user_id"/>
+         </index>
+      </table>
+      <table name="web_origins" remarks="" schema="keycloak" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="client_id" nullable="false" remarks="" size="36" type="varchar" typeCode="12">
+            <parent column="id" foreignKey="fk_lojpho213xcx4wnkog82ssrfy" implied="false" onDeleteCascade="false" schema="keycloak" table="client"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="value" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="client_id" sequenceNumberInPK="1"/>
+         <primaryKey column="value" sequenceNumberInPK="2"/>
+         <index name="constraint_web_origins" unique="true">
+            <column ascending="true" name="client_id"/>
+            <column ascending="true" name="value"/>
+         </index>
+         <index name="idx_web_orig_client" unique="false">
+            <column ascending="true" name="client_id"/>
+         </index>
+      </table>
+   </tables>
+</database>
